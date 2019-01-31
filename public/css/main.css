@@ -1,0 +1,71 @@
+/*higcharts*/
+.highcharts-exporting-group {
+  display: none;
+}
+.highcharts-credits {
+  display: none;
+}
+
+/*欲しい物リスト*/
+.ListName_flex {
+  display: flex;
+}
+/*購入・未購入ボタン*/
+.never {
+  background-color: darkred;
+}
+.aready {
+  background-color: lightblue;
+}
+
+/*削除ボタン*/
+button.delete {
+  width: 30px;
+  height: 30px;
+  background-color: darkred;
+  border: darkred;
+  border-radius: 50%;
+  box-shadow: 0 1px 1px #666666;
+}
+button:hover {
+  cursor: pointer;
+}
+div.deleteButton {
+  display: flex;
+  justify-content: flex-end;
+}
+
+footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 9999;
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: -8px; /*なぜか左に隙間ができたので*/
+  box-shadow:  0px -1px 2px #666666;
+}
+/*フッターアイコン*/
+div.footer_icons {
+  display: flex;
+  justify-content: space-around;
+  color: black;
+}
+div.footer_icons a{
+  color: grey;
+  text-decoration: none;
+}
+div.icon_to_center {
+  text-align: center;
+}
+i{
+  font-size: 1.4em;
+}
+div.font{
+  font-size: 70%;
+}
+footer div.selected {
+  color: red;
+  border-bottom: solid 2px red;
+}
