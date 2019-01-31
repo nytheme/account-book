@@ -22,6 +22,21 @@ class EditController extends Controller
         return view('edit_bud', $data);
     }
     
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'budget' => 'required|max:191',
+        ]);
+        
+        $budgets = new Budget;
+        $budgets->user_id = $request->user_id;
+        $budgets->budget = $request->budget;
+        $budgets->day = $request->day;
+        $budgets->save();
+
+        return redirect()->back();
+    }
+    
     public function edit(Request $request, $id) {
         $budgets = Budget::find($id);
         return view('edit_bud', ['budgets' => $budgets]);

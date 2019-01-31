@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccounListsTable extends Migration
+class CreateAccountListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -18,6 +18,7 @@ class CreateAccounListsTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->string('name');
             $table->string('memo')->nullable();
+            $table->integer('switch');
             $table->timestamps();
             
             // 外部キー制約

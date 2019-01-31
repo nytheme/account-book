@@ -36,5 +36,6 @@ Route::post('write_exp', 'ExpensesController@store')->name('expenses.store');
 Route::get('past_exp', 'ExpensesController@indexPast_exp')->name('past_exp');
 //予算等編集ページ
 Route::get('edit_bud', 'EditController@index')->name('showEdit_bud');
+Route::post('edit_bud', 'EditController@store')->name('edit_bud.store');
 Route::get('edit_bud/{id}', 'EditController@edit')->name('edit_bud');
 Route::post('edit_bud/{id}', 'EditController@update');
