@@ -1,7 +1,7 @@
 @extends('layouts.head')
 
 @section('content')
-
+    <div class="container">
     <?php   //年月日から曜日を割り出す
         $today = date('Y/m/d');
         $today_without_year = date('n/j');  //nとjはmとdの一桁表示
@@ -35,9 +35,9 @@
             <h2>支出を記入してください</h2>
         @else
             <!--チャート-->
-            <div id="container"></div>
+            <div id="chart"></div>
         @endif
-      
+        </div>
         <footer>
             <div class="footer_icons">
                 <div class="selected">
@@ -85,7 +85,7 @@
         var outdoor = '{{ ($outdoor / $user->budget)*100 }}';
         var others = '{{ ($others / $user->budget)*100 }}';
         
-        Highcharts.chart('container', {
+        Highcharts.chart('chart', {
           chart: {
             plotBackgroundColor: null,
             plotBorderWidth: 0,

@@ -1,3 +1,15 @@
+h2 {
+  font-size: 1.6em;
+  font-weight: bold; 
+}
+h3 {
+  font-size: 1.4em;
+  font-weight: bold; 
+}
+h4 {
+  font-size: 1.2em;
+  font-weight: bold; 
+}
 /*higcharts*/
 .highcharts-exporting-group {
   display: none;
@@ -5,17 +17,37 @@
 .highcharts-credits {
   display: none;
 }
+#chart {
+  margin-bottom: 200px;
+}
 
 /*欲しい物リスト*/
+.list_btn {
+  margin-bottom: 20px;
+}
+table tr.date {
+  background-color: lightgrey;
+}
+table th.date {
+  padding-top: 0;
+  padding-bottom: 0;
+}
 .ListName_flex {
   display: flex;
 }
-/*購入・未購入ボタン*/
-.never {
-  background-color: darkred;
+div.name {
+  font-size: 1.5em; 
+  font-weight: bold; 
+  margin-left: 10px;
 }
-.aready {
-  background-color: lightblue;
+div.lined_name {
+  font-size: 1.5em; 
+  font-weight: bold; 
+  margin-left: 10px;
+  text-decoration: line-through;
+}
+hr.make_bottom {
+  margin-top: 60px;
 }
 
 /*削除ボタン*/
@@ -43,7 +75,7 @@ footer {
   background-color: white;
   padding-top: 10px;
   padding-bottom: 10px;
-  margin-left: -8px; /*なぜか左に隙間ができたので*/
+  /*margin-left: -8px; /*なぜか左に隙間ができたので*/
   box-shadow:  0px -1px 2px #666666;
 }
 /*フッターアイコン*/
