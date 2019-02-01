@@ -63,7 +63,7 @@
             </a>
         </div>
         <div>
-            <a href="edit_bud">
+            <a href="edit">
                 <div class="icon_to_center"><i class="far fa-laugh"></i></div>
                 <div class="font">編集</div>
             </a>

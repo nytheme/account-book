@@ -23,28 +23,32 @@
                 {!! Form::label('password', 'Password') !!}
                 {!! Form::password('password', ['class' => 'form-control']) !!}
             </div>
-            {!! Form::submit('Log in', ['class' => 'btn btn-primary btn-block']) !!}
+            {!! Form::submit('Log in', ['class' => 'btn']) !!}
         {!! Form::close() !!}
         
         <h2>新規グループ登録</h2>
         {!! Form::open(['route' => 'signup.post']) !!}
             <div class="form-group">
-                {!! Form::label('name', 'Name') !!}
+                {!! Form::label('name', 'グループ名') !!}
                 {!! Form::text('name', old('name'), ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">
-                {!! Form::label('email', 'Email') !!}
+                {!! Form::label('email', 'メールアドレス') !!}
                 {!! Form::email('email', old('email'), ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">
-                {!! Form::label('password', 'Password') !!}
+                {!! Form::label('budget', '予算') !!}
+                {!! Form::tel('budget', old('budget'), ['class' => 'form-control']) !!}
+            </div>
+            <div class="form-group">
+                {!! Form::label('password', 'パスワード') !!}
                 {!! Form::password('password', ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">
-                {!! Form::label('password_confirmation', 'Confirmation') !!}
+                {!! Form::label('password_confirmation', 'パスワード確認') !!}
                 {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
             </div>
-            {!! Form::submit('Sign up', ['class' => 'btn btn-primary btn-block']) !!}
+            {!! Form::submit('Sign up', ['class' => 'btn']) !!}
         {!! Form::close() !!}
     @endif
     </body>

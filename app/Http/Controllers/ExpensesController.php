@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Expense;
 use App\User;
-use App\Budget;
+//use App\Budget;
 
 class ExpensesController extends Controller
 {
@@ -18,8 +18,8 @@ class ExpensesController extends Controller
         //$sum = Expense::where('user_id', \Auth::id())->where('day', '>=', $this_month_1st)->where('day', '<=', $today)->sum("money");
         $this_month_sum = Expense::where('user_id', \Auth::id())->whereBetween('day', [$this_month_1st, $this_month_last])->sum("money");
         $expenses = Expense::where('user_id', \Auth::id())->whereBetween('day', [$this_month_1st, $this_month_last])->orderBy('day', 'desc')->get();
-        $users = User::all();
-        $budgets = Budget::all();
+        $users = User::where('id', \Auth::id())->get();
+        //$budgets = Budget::where('user_id', \Auth::id())->get();
         //チャート用の変数
         $food =  Expense::where('user_id', \Auth::id())->where('category','食費')->whereBetween('day', [$this_month_1st, $this_month_last])->sum("money");
         $medical = Expense::where('user_id', \Auth::id())->where('category','保険・医療')->whereBetween('day', [$this_month_1st, $this_month_last])->sum("money");
@@ -34,7 +34,7 @@ class ExpensesController extends Controller
             'expenses' => $expenses, 
             'users' => $users,
             'this_month_sum' => $this_month_sum,
-            'budgets' => $budgets,
+            //'budgets' => $budgets,
             //チャート用の変数
             'food' => $food,
             'medical' => $medical,
@@ -51,7 +51,7 @@ class ExpensesController extends Controller
     
     public function indexWrite_exp()
     {
-        $users = User::all();
+        $users = User::where('id', \Auth::id())->get();
         
         $data = [
             'users' => $users
@@ -68,14 +68,14 @@ class ExpensesController extends Controller
         //$sum = Expense::where('user_id', \Auth::id())->where('day', '>=', $this_month_1st)->where('day', '<=', $today)->sum("money");
         $this_month_sum = Expense::where('user_id', \Auth::id())->whereBetween('day', [$this_month_1st, $this_month_last])->sum("money");
         $expenses = Expense::where('user_id', \Auth::id())->whereBetween('day', [$this_month_1st, $this_month_last])->orderBy('day', 'desc')->get();
-        $users = User::all();
-        $budgets = Budget::all();
+        $users = User::where('id', \Auth::id())->get();
+        //$budgets = Budget::all();
         
         $data = [
             'expenses' => $expenses, 
             'users' => $users,
             'this_month_sum' => $this_month_sum,
-            'budgets' => $budgets
+            //'budgets' => $budgets
         ];
         
         return view('past_exp', $data);

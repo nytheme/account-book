@@ -18,30 +18,16 @@
                 <tr>
                     <th>予算</th><th>支出</th><th>残高</th>
                 </tr>
-                @foreach($budgets as $budget)
-            
-                    @if (Auth::id() !== $budget->user_id)
                     <tr>
-                        <th><a href="edit_bud">未設定</a></th>
-                        <th>：¥{{ number_format($this_month_sum) }}</th>
-                        <th>-</th>
-                    </tr>
-                    @elseif (Auth::id() == $budget->user_id && $budget->budget > 0 )
-                    <tr>
-                        <th>¥{{ number_format($budget->budget) }}</th>
+                        <th>¥{{ number_format($user->budget) }}</th>
                         <th>¥{{ number_format($this_month_sum) }}</th>
-                        @if($budget->budget - $this_month_sum < 0)
-                            <th style="color: red;">¥{{ number_format($budget->budget - $this_month_sum) }}</th>
+                        @if($user->budget - $this_month_sum < 0)
+                            <th style="color: red;">¥{{ number_format($user->budget - $this_month_sum) }}</th>
                         @else
-                            <th>¥{{ number_format($budget->budget - $this_month_sum) }}</th>
+                            <th>¥{{ number_format($user->budget - $this_month_sum) }}</th>
                         @endif
                     </tr>
-                    @endif 
-                <?php break; ?>
-            
-                @endforeach
             </table>
-        
         <?php break; ?>
         @endforeach
         
@@ -73,7 +59,7 @@
                     </a>
                 </div>
                 <div>
-                    <a href="edit_bud">
+                    <a href="edit">
                         <div class="icon_to_center"><i class="far fa-laugh"></i></div>
                         <div class="font">編集</div>
                     </a>
@@ -86,14 +72,14 @@
         <script src="https://code.highcharts.com/highcharts.src.js"></script>
         <script>
         //チャート用のPHP変数をJS変数に
-        var food = '{{ ($food / $budget->budget)*100 }}';
-        var medical = '{{ ($medical / $budget->budget)*100 }}';
-        var fixed = '{{ ($fixed / $budget->budget)*100 }}';
-        var clothes = '{{ ($clothes / $budget->budget)*100 }}';
-        var pocket = '{{ ($pocket / $budget->budget)*100 }}';
-        var daily = '{{ ($daily / $budget->budget)*100 }}';
-        var outdoor = '{{ ($outdoor / $budget->budget)*100 }}';
-        var others = '{{ ($others / $budget->budget)*100 }}';
+        var food = '{{ ($food / $user->budget)*100 }}';
+        var medical = '{{ ($medical / $user->budget)*100 }}';
+        var fixed = '{{ ($fixed / $user->budget)*100 }}';
+        var clothes = '{{ ($clothes / $user->budget)*100 }}';
+        var pocket = '{{ ($pocket / $user->budget)*100 }}';
+        var daily = '{{ ($daily / $user->budget)*100 }}';
+        var outdoor = '{{ ($outdoor / $user->budget)*100 }}';
+        var others = '{{ ($others / $user->budget)*100 }}';
         
         Highcharts.chart('container', {
           chart: {
@@ -137,9 +123,5 @@
           }]
         });
         </script> 
-
-    
-
-    
 
 @endsection

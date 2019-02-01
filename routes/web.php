@@ -40,8 +40,8 @@ Route::group(['middleware' => ['auth']], function () {
 });
 //予算等編集ページ
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('edit_bud', 'EditController@index')->name('showEdit_bud');
-    Route::post('edit_bud', 'EditController@store')->name('edit_bud.store');
-    Route::get('edit_bud/{id}', 'EditController@edit')->name('edit_bud');
-    Route::post('edit_bud/{id}', 'EditController@update');
+    Route::get('edit', 'EditController@index')->name('showEdit');
+    Route::post('edit', 'EditController@store')->name('edit.store');
+    Route::get('edit/{id}', 'EditController@edit')->name('edit');
+    Route::post('edit/{id}', 'EditController@update');
 });

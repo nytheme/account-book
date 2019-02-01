@@ -3,35 +3,16 @@
 @section('content')
     @foreach ($users as $user)
         <h2>{{ Auth::user()->name }} 編集画面</h2>
-        {!! Form::open(['route' => 'edit_bud.store']) !!}
-            <div style="display: none;">
-                {!! Form::label('user_id', 'user_id:') !!}
-                {!! Form::text('user_id', Auth::user()->id) !!}
-            </div>
-            <div>
-                {!! Form::label('budget', '予算:') !!}
-                {!! Form::text('budget') !!}
-            </div>
-            <div>
-                {!! Form::label('day', '給料日:') !!}
-                {!! Form::text('day') !!}
-            </div>
-        {!! Form::submit('登録') !!}
-        {!! Form::close() !!}
             
-        @foreach($budgets as $budget)
-            {!! Form::model($budget, ['route' => ['edit_bud', $budget->id], 'method' => 'post']) !!}
-            <div style="display: none;">
-                {!! Form::label('user_id', 'user_id:') !!}
-                {!! Form::text('user_id', $budget->user_id) !!}
+        @foreach($users as $user)
+            {!! Form::model($user, ['route' => ['edit', $user->id], 'method' => 'post']) !!}
+            <div>
+                {!! Form::label('name', 'グループ名:') !!}
+                {!! Form::text('name', $user->name) !!}
             </div>
             <div>
                 {!! Form::label('budget', '予算:') !!}
-                {!! Form::text('budget', $budget->budget) !!}
-            </div>
-            <div>
-                {!! Form::label('day', '給料日:') !!}
-                {!! Form::text('day', $budget->day) !!}
+                {!! Form::tel('budget', $user->budget) !!}
             </div>
         {!! Form::submit('更新') !!}
         {!! Form::close() !!}
