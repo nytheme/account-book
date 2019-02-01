@@ -44,7 +44,6 @@
         
         <?php break; ?>
     @endforeach
-    <h3>{!! link_to_route('logout.get', 'Logout') !!}</h3>
     
 <footer>
     <div class="footer_icons">
