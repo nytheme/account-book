@@ -30,10 +30,14 @@
             </table>
         <?php break; ?>
         @endforeach
-        
-        <!--チャート-->
-        <div id="container"></div>
-        
+        <!--チャートの表示・非表示-->
+        @if($this_month_sum == 0)
+            <h2>支出を記入してください</h2>
+        @else
+            <!--チャート-->
+            <div id="container"></div>
+        @endif
+      
         <footer>
             <div class="footer_icons">
                 <div class="selected">

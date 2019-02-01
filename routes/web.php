@@ -12,9 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('loginPage');
+    return view('home');
 });
+Auth::routes();
 
+Route::get('/home', 'HomeController@index')->name('home');
 // ユーザ登録
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
 Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
@@ -45,3 +47,4 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('edit/{id}', 'EditController@edit')->name('edit');
     Route::post('edit/{id}', 'EditController@update');
 });
+
