@@ -20,7 +20,21 @@ h4 {
 #chart {
   margin-bottom: 200px;
 }
-
+/*カレンダー*/
+.spending {
+  font-size: 70%;
+}
+/*土日の色変更*/
+.today {
+  background: grey;
+}
+th.calender:nth-of-type(7), td.calender:nth-of-type(7) {
+  color: red;
+}
+th.calender:nth-of-type(6), td.calender:nth-of-type(6) {
+  color: blue;
+}
+/*カレンダーここまで*/
 /*欲しい物リスト*/
 .list_btn {
   margin-bottom: 20px;

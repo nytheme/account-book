@@ -1,101 +1,134 @@
+@extends('layouts.head')
 
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <link rel="stylesheet" href="{{ secure_asset('css/list.css') }}">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-        
-        <title>家計簿</title>
+@section('content')
 
-    </head>
-    <body>
-        @foreach ($users as $user)
-            <h2>{{ Auth::user()->name }} 家計簿</h2>
-            <h3>{!! link_to_route('showEdit_bud', '編集画面へ') !!}</h3>
-            @foreach($budgets as $budget)
-                @if (Auth::id() !== $budget->user_id)
-                    <h3>予算：-円（予算が未設定です）</h3>
-                    <h3>支出合計：{{ $sum }}円</h3>
-                    <h3>残高：-円</h3>
-                    <h3>給料日：-日</h3>
-                @elseif (Auth::id() == $budget->user_id && $budget->budget > 0 )
-                    <h3>予算：{{ $budget->budget }}円</h3>
-                    <h3>支出合計：{{ $sum }}円</h3>
-                    <h3>残高：{{ $budget->budget - $sum }}円</h3>
-                    <h3>給料日：{{ $budget->day }}日</h3>
-                @endif 
-                <?php break; ?>
-            @endforeach
-            
-            @php
-                $y = date('Y');
-                $m = date('m');
-                $wd1 = date("w", mktime(0, 0, 0, $m, 1, $y)); // 1日の曜日を取得
-                $d = 1;
-                $today = date('d');
-                $ii = 101;
-            @endphp
-            <h3>{{ $y }}年 {{ $m }}月{{ $today }}日</h3>
-            <table border="1">
-                <tr>
-                    <th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th><th>日</th>
-                </tr>
-                <tr>
-                    @foreach ($expenses as $expense)
+    <div class="container">
+        <?php
+            // 前月・次月リンクが押された場合は、GETパラメーターから年月を取得
+            if (isset($_GET['ym'])) {
+                $ym = $_GET['ym'];
+            } else {
+                // 今月の年月を表示
+                $ym = date('Y-m');
+            }
+            // タイムスタンプを作成し、フォーマットをチェックする
+            $timestamp = strtotime($ym . '-01');
+            if ($timestamp === false) {
+                $ym = date('Y-m');
+                $timestamp = strtotime($ym . '-01');
+            }
+            // カレンダーのタイトルを作成　例）2017年7月
+            $html_title = date('Y年n月', $timestamp);
+            // 前月・次月の年月を取得
+            // 方法１：mktimeを使う mktime(hour,minute,second,month,day,year)
+            $prev = date('Y-m', mktime(0, 0, 0, date('m', $timestamp)-1, 1, date('Y', $timestamp)));
+            $next = date('Y-m', mktime(0, 0, 0, date('m', $timestamp)+1, 1, date('Y', $timestamp)));
+        ?>
+        <h3><a href="?ym=<?php echo $prev; ?>">&lt;</a> <?php echo $html_title; ?> <a href="?ym=<?php echo $next; ?>">&gt;</a></h3>
+        <table>
+            <tr>
+                <th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th class='calender'>土</th><th class='calender'>日</th>
+            </tr>
+            <tr>
+                @foreach ($expenses as $expense)
                     <?php
+                        $y = substr($ym, 0, 4);//date('Y');
+                        $m = substr($ym, 5, 2);//date('m');
+                        $d = 1;
+                        $today = date('Y-m-j');
+                        
                         // 1日の曜日の前に空白を表示
+                        $wd1 = date("w", mktime(0, 0, 0, $m, 1, $y));
                         for ($i = 2; $i <= $wd1; $i++) {
                             echo "<td></td>";
                         }
+                        //カレンダー作成
                         while (checkdate($m, $d, $y)) {
-                           
-                            echo "<td>$d<br> 
-                                    
-                                    $ii 円
-                                    
-                                </td>";
+                            $date = $ym . '-' . $d;
+                            $day = sprintf('%02d', $d);//1桁の数字を二桁表示
+                            $day_for_expression = $y.'-'.$m.'-'.$day;//検索用の当日日付表示
+                            //DBから該当データを呼び出すSQL文
+                            $calender_expenses = \App\Expense::where('user_id', \Auth::id())->where('day', $day_for_expression)->get()->toArray();
+                            $calender_expense = array_column( $calender_expenses, 'money' );
                             
-                                if (date("w", mktime(0, 0, 0, $m, $d, $y)) == 0) {
-                                    echo "</tr>"; // 週を終了
+                            if($calender_expense != null){
+                                if($today == $date){
+                                    echo "<td class='calender'>
+                                            <p class='today'>$d</p>";
+                                    $spending = number_format($calender_expense[0]);
+                                    echo    "<a href='#' class='spending'>¥$spending</a>
+                                          </td>";
+                                } else {
+                                    echo "<td class='calender'>
+                                            <p>$d</p>";
+                                    $spending = number_format($calender_expense[0]);
+                                    echo    "<a href='#' class='spending'>¥$spending</a>
+                                          </td>";
+                                }
+                            } else {
+                                if($today == $date){
+                                    echo "<td class='calender'>
+                                            <p class='today'>$d</p>
+                                            -
+                                          </td>";
+                                } else {
+                                    echo "<td class='calender'>
+                                            <p>$d</p>
+                                            -
+                                          </td>";
+                                }
+                            }
+                                if (date("w", mktime(0, 0, 0, $m, $d, $y)) == 0) { //0は日曜。W=日曜なら週を終了
+                                    echo "</tr>"; // 列を閉じる
                                     
                                     // 次の週がある場合は新たな行を準備
-                                    if (checkdate($m, $d + 1, $y)) {
+                                    if (checkdate($m, $d + 1, $y)) { //週終了日に一日プラスした日から新しい列をスタート→whileへ
                                         echo "<tr>";
                                     }
                                 }
                             $d++;
-                            $ii++;
-                        };
-                       
+                        };  //while (checkdate($m, $d, $y)) 
                     ?>
-                    @endforeach
-                <tr>
-            </table>
-            <h3>{{ $m }}月の買い物</h3>
-            <table>
-                <tr>
-                    <th>分類</th><th>商品</th><th>価格</th><th>購入日</th>
-                </tr>
-                @foreach ($expenses as $expense)
-                    <tr>
-                        <td>{{ $expense->category }}</td><td>{{ $expense->name }}</td><td>{{ $expense->money }}円</td><td>{{ $expense->day }}</td>
-                        <div class="deleteButton">
-                        {!! Form::open(['route' => ['expenses.destroy', $expense->id], 'method' => 'delete']) !!}
-                            <td><button type="submit"><i class="fas fa-eraser" style="font-size: 1.5em; color: white"></i></button></td>
-                        {!! Form::close() !!}
-                        </div>
-                    </tr>
-                @endforeach
-            </table>
-        <?php break; ?>
-        @endforeach
-        <h3>{!! link_to_route('write_exp', '買った物を登録する') !!}</h3>
-        <h3>{!! link_to_route('past_exp', '月別ページへ') !!}</h3>
-        <h3>{!! link_to_route('accountLists', '買い物リストへ') !!}</h3>
-        <h3>{!! link_to_route('logout.get', 'Logout') !!}</h3>
-    </body>
-</html>
+                    
+                    <?php break; ?>
+                    
+                @endforeach<!--($expenses as $expense)-->
+            </tr>
+        </table><!--カレンダーここまで-->
+
+    </div><!--.cintainer-->
+        
+    <footer>
+        <div class="footer_icons">
+            <a href="show_exp">
+                <div class="icon_to_center"><i class="fas fa-home icon"></i></div>
+                <div class="font">ホーム</div>
+            </a>
+            <div>
+                <a href="past_exp">
+                    <div class="icon_to_center"><i class="fas fa-list-ul"></i></div> 
+                    <div class="font">家計簿</div>
+                </a>
+            </div>
+            <div>
+                <div class="selected">
+                    <div class="icon_to_center"><i class="far fa-calendar-check"></i></div>
+                    <div class="font">カレンダー</div>
+                </div>
+            </div>
+            <div>
+                <a href="accountLists">
+                    <div class="icon_to_center"><i class="fas fa-shopping-cart"></i></div>
+                    <div class="font">欲しい物</div>
+                </a>
+            </div>
+            <div>
+                <a href="edit">
+                    <div class="icon_to_center"><i class="far fa-laugh"></i></div>
+                    <div class="font">編集</div>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+@endsection

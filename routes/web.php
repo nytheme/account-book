@@ -40,6 +40,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('write_exp', 'ExpensesController@store')->name('expenses.store');
     Route::get('past_exp', 'ExpensesController@indexPast_exp')->name('past_exp');
 });
+//カレンダーページ
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('calendar', 'ExpensesController@indexCalendar')->name('calendar');
+});
 //予算等編集ページ
 Route::group(['middleware' => ['auth']], function () {
     Route::get('edit', 'EditController@index')->name('showEdit');

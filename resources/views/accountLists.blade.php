@@ -6,7 +6,37 @@
         @foreach ($users as $user)
             <h2>欲しい物リスト</h2>
             
-            <a class="list_btn waves-effect waves-light btn-small modal-trigger" href="#modal1">登録</a>
+            <!-- Modal Trigger -->
+            <a class="list_btn waves-effect waves-light btn-floating modal-trigger" href="#modal1"><i class="fas fa-pen"></i></a>
+            
+            <!-- Modal Structure -->
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                    <h4>欲しい物を登録してください</h4>
+                    {!! Form::open(['route' => 'accountLists.store']) !!}
+                        <div style="display: none">
+                        {!! Form::label('ID') !!}
+                        {!! Form::text('user_id', Auth::user()->id) !!}
+                        </div>
+                        <div>
+                        {!! Form::label('名前') !!}
+                        {!! Form::text('name') !!}
+                        </div>
+                        <div>
+                        {!! Form::label('メモ') !!}
+                        {!! Form::text('memo') !!}
+                        </div>
+                        <div style="display: none">
+                        {!! Form::label('switch') !!}
+                        {!! Form::text('switch', 0) !!}
+                        </div>
+                        <button type="submit" class="btn">記入</button>
+                    {!! Form::close() !!}
+                </div><!--.modal-content-->
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close btn-flat">閉じる</a>
+                </div>
+            </div>
             
             @foreach ($accountLists as $accountList)
                 <table class="listTable">
@@ -42,7 +72,7 @@
                                         <div style="display: none;">
                                             {!! Form::text('switch', 0) !!}
                                         </div>
-                                        <button type="submit" class="btn-small white" style="border: solid 1px lightgrey;"></button>
+                                        <button type="submit" class="btn-small white"></button>
                                     {!! Form::close() !!}
                                 </div>    
                                 <div class="lined_name">
@@ -69,35 +99,6 @@
                 </table>
             @endforeach
 
-            <!-- Modal Structure -->
-            <div id="modal1" class="modal">
-                <div class="modal-content">
-                    <h4>欲しい物を登録してください</h4>
-                    {!! Form::open(['route' => 'accountLists.store']) !!}
-                        <div style="display: none">
-                        {!! Form::label('ID') !!}
-                        {!! Form::text('user_id', Auth::user()->id) !!}
-                        </div>
-                        <div>
-                        {!! Form::label('名前') !!}
-                        {!! Form::text('name') !!}
-                        </div>
-                        <div>
-                        {!! Form::label('メモ') !!}
-                        {!! Form::text('memo') !!}
-                        </div>
-                        <div style="display: none">
-                        {!! Form::label('switch') !!}
-                        {!! Form::text('switch', 0) !!}
-                        </div>
-                        <button type="submit" class="btn">登録</button>
-                    {!! Form::close() !!}
-                </div><!--.modal-content-->
-                <div class="modal-footer">
-                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
-                </div>
-            </div>
-
         <?php break; ?>
         @endforeach
         <hr class="make_bottom">
@@ -118,9 +119,9 @@
                 </a>
             </div>
             <div>
-                <a href="write_exp">
-                    <div class="icon_to_center"><i class="fas fa-pen"></i></div>
-                    <div class="font">記入</div>
+                <a href="calendar">
+                    <div class="icon_to_center"><i class="far fa-calendar-check"></i></div>
+                    <div class="font">カレンダー</div>
                 </a>
             </div>
             <div class="selected">
