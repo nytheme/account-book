@@ -21,27 +21,41 @@ h4 {
   margin-bottom: 200px;
 }
 /*カレンダー*/
+h4.calendar {
+  text-align: center;
+}
 .spending {
   font-size: 70%;
 }
-/*土日の色変更*/
+tr.calendar {
+  height: 90px;
+}
+th.calendar {
+  text-align: center;
+}
+td.calendar {
+  padding: 0;
+  width: 14.2%;
+  text-align: center;
+  vertical-align: top;/*テキスト上揃え*/
+}
+p.calendar {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+/*当日の色変更*/
 .today {
   background: grey;
 }
-th.calender:nth-of-type(7), td.calender:nth-of-type(7) {
-  color: red;
-}
-th.calender:nth-of-type(6), td.calender:nth-of-type(6) {
+/*土日の色変更*/
+th.calendar:nth-of-type(6), td.calendar:nth-of-type(6) {
   color: blue;
 }
+th.calendar:nth-of-type(7), td.calendar:nth-of-type(7) {
+  color: red;
+}
 /*カレンダーここまで*/
-/*欲しい物リスト*/
-.list_btn {
-  margin-bottom: 20px;
-}
-table tr.date {
-  background-color: lightgrey;
-}
+
 table th.date {
   padding-top: 0;
   padding-bottom: 0;

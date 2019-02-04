@@ -24,12 +24,12 @@
             $prev = date('Y-m', mktime(0, 0, 0, date('m', $timestamp)-1, 1, date('Y', $timestamp)));
             $next = date('Y-m', mktime(0, 0, 0, date('m', $timestamp)+1, 1, date('Y', $timestamp)));
         ?>
-        <h3><a href="?ym=<?php echo $prev; ?>">&lt;</a> <?php echo $html_title; ?> <a href="?ym=<?php echo $next; ?>">&gt;</a></h3>
+        <h4 class='calendar'><a href="?ym=<?php echo $prev; ?>">&lt;</a> <?php echo $html_title; ?> <a href="?ym=<?php echo $next; ?>">&gt;</a></h4>
         <table>
             <tr>
-                <th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th class='calender'>土</th><th class='calender'>日</th>
+                <th class='calendar'>月</th><th class='calendar'>火</th><th class='calendar'>水</th><th class='calendar'>木</th><th class='calendar'>金</th><th class='calendar'>土</th><th class='calendar'>日</th>
             </tr>
-            <tr>
+            <tr class='calendar'>
                 @foreach ($expenses as $expense)
                     <?php
                         $y = substr($ym, 0, 4);//date('Y');
@@ -48,32 +48,35 @@
                             $day = sprintf('%02d', $d);//1桁の数字を二桁表示
                             $day_for_expression = $y.'-'.$m.'-'.$day;//検索用の当日日付表示
                             //DBから該当データを呼び出すSQL文
-                            $calender_expenses = \App\Expense::where('user_id', \Auth::id())->where('day', $day_for_expression)->get()->toArray();
-                            $calender_expense = array_column( $calender_expenses, 'money' );
+                            //$calendar_expenses = \App\Expense::where('user_id', \Auth::id())->where('day', $day_for_expression)->get()->toArray();
+                            //$calendar_expense = array_column( $calendar_expenses, 'money' );
+                            $this_day_sum = \App\Expense::where('user_id', \Auth::id())->where('day', $day_for_expression)->sum('money');
                             
-                            if($calender_expense != null){
+                            if($this_day_sum != null){
                                 if($today == $date){
-                                    echo "<td class='calender'>
-                                            <p class='today'>$d</p>";
-                                    $spending = number_format($calender_expense[0]);
-                                    echo    "<a href='#' class='spending'>¥$spending</a>
+                                    echo "<td class='calendar'>
+                                            <p class='today calendar'>$d</p>";
+                                    //$spending = number_format($calendar_expense[0]);
+                                    $thisDaySum = number_format($this_day_sum);
+                                    echo    "<a href='#' class='spending'>¥$thisDaySum</a>
                                           </td>";
                                 } else {
-                                    echo "<td class='calender'>
-                                            <p>$d</p>";
-                                    $spending = number_format($calender_expense[0]);
-                                    echo    "<a href='#' class='spending'>¥$spending</a>
+                                    echo "<td class='calendar'>
+                                            <p class='calendar'>$d</p>";
+                                   // $spending = number_format($calendar_expense[0]);
+                                    $thisDaySum = number_format($this_day_sum);
+                                    echo    "<a href='#' class='spending'>¥$thisDaySum</a>
                                           </td>";
                                 }
                             } else {
                                 if($today == $date){
-                                    echo "<td class='calender'>
-                                            <p class='today'>$d</p>
+                                    echo "<td class='calendar'>
+                                            <p class='today calendar'>$d</p>
                                             -
                                           </td>";
                                 } else {
-                                    echo "<td class='calender'>
-                                            <p>$d</p>
+                                    echo "<td class='calendar'>
+                                            <p class='calendar'>$d</p>
                                             -
                                           </td>";
                                 }
@@ -83,7 +86,7 @@
                                     
                                     // 次の週がある場合は新たな行を準備
                                     if (checkdate($m, $d + 1, $y)) { //週終了日に一日プラスした日から新しい列をスタート→whileへ
-                                        echo "<tr>";
+                                        echo "<tr class='calendar'>";
                                     }
                                 }
                             $d++;
@@ -95,7 +98,8 @@
                 @endforeach<!--($expenses as $expense)-->
             </tr>
         </table><!--カレンダーここまで-->
-
+        <hr class="make_bottom">
+        <hr class="make_bottom">
     </div><!--.cintainer-->
         
     <footer>
