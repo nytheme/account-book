@@ -27,7 +27,7 @@ $('.money_select').click(function(){
 });
 
 //slideToggle
-$('.write_btn').click(function() {
+$(document).on('click', '.write_btn', function() {
   var $toggle = $(this).closest('.slide_parent').find('.slide_content');
   
   if($toggle.hasClass('open')) { 
@@ -39,7 +39,7 @@ $('.write_btn').click(function() {
     $toggle.slideDown();
   }
 });
-$('.slide_close').click(function() {
+$(document).on('click', '.slide_close', function() {
   var $toggle = $(this).closest('.slide_parent').find('.slide_content');
   
   if($toggle.hasClass('open')) { 

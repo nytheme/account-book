@@ -8,7 +8,7 @@
             <section class="slide_parent">
                 <!--トグル呼び出しボタン-->
                 <div class="write_btn_div">
-                    <a class="waves-effect waves-light btn-floating write_btn"><i class="fas fa-pen"></i></a>
+                    <a class="waves-effect waves-light btn-floating write_btn" onclick=""><i class="fas fa-pen"></i></a>
                 </div>
                 <!--slideToggle contents-->
                 <div class="slide_content display_none">
