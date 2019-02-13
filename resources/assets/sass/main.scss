@@ -20,7 +20,6 @@ h4 {
 #chart {
   margin-bottom: 200px;
 }
-/*higchartsここまで*/
 /*家計簿*/
 div.past_exp_flex{
   display: flex;
@@ -85,7 +84,7 @@ th.calendar:nth-of-type(7), td.calendar:nth-of-type(7) {
   color: red;
 }
 /*カレンダーここまで*/
-/*欲しいものリスト*/
+
 table th.date {
   padding-top: 0;
   padding-bottom: 0;
@@ -94,18 +93,16 @@ table th.date {
   display: flex;
 }
 div.name {
-  font-size: 1.2em; 
+  font-size: 1.5em; 
   font-weight: bold; 
   margin-left: 10px;
 }
 div.lined_name {
-  font-size: 1.2em; 
+  font-size: 1.5em; 
   font-weight: bold; 
   margin-left: 10px;
   text-decoration: line-through;
 }
-/*欲しいものリストここまで*/
-/*余白作成*/
 hr.make_bottom {
   margin-top: 60px;
 }
@@ -138,7 +135,7 @@ div.deleteButton {
   display: flex;
   justify-content: flex-end;
 }
-/*削除ボタンここまで*/
+
 footer {
   width: 100%;
   position: fixed;

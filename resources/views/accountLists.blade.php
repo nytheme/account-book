@@ -4,97 +4,106 @@
 
     <div class="container">
         @foreach ($users as $user)
-            <h2>欲しい物リスト</h2>
-            
-            <!-- Modal Trigger -->
-            <a class="list_btn waves-effect waves-light btn-floating modal-trigger" href="#modal1"><i class="fas fa-pen"></i></a>
-            
-            <!-- Modal Structure -->
-            <div id="modal1" class="modal">
-                <div class="modal-content">
-                    <h4>欲しい物を登録してください</h4>
-                    {!! Form::open(['route' => 'accountLists.store']) !!}
-                        <div style="display: none">
-                        {!! Form::label('ID') !!}
-                        {!! Form::text('user_id', Auth::user()->id) !!}
-                        </div>
-                        <div>
-                        {!! Form::label('名前') !!}
-                        {!! Form::text('name') !!}
-                        </div>
-                        <div>
-                        {!! Form::label('メモ') !!}
-                        {!! Form::text('memo') !!}
-                        </div>
-                        <div style="display: none">
-                        {!! Form::label('switch') !!}
-                        {!! Form::text('switch', 0) !!}
-                        </div>
-                        <button type="submit" class="btn">記入</button>
-                    {!! Form::close() !!}
-                </div><!--.modal-content-->
-                <div class="modal-footer">
-                    <a href="#!" class="modal-close btn-flat">閉じる</a>
+            <!-- slideToggle -->
+            <section class="slide_parent">
+                <!--トグル呼び出しボタン-->
+                <div class="write_btn_div">
+                    <a class="waves-effect waves-light btn-floating write_btn"><i class="fas fa-pen"></i></a>
                 </div>
-            </div>
+                <!--slideToggle contents-->
+                <div class="slide_content display_none">
+                    <a href="#!" class="slide_close waves-effect waves-green btn-flat"><i class="fas fa-times"></i></a>
+                    <h4 style="text-align: center">欲しい物を登録してください</h4>
+                    @foreach ($users as $user)
+                        {!! Form::open(['route' => 'accountLists.store']) !!}
+                            <div style="display: none">
+                                {!! Form::label('ID') !!}
+                                {!! Form::text('user_id', Auth::user()->id) !!}
+                            </div>
+                            <div>
+                                {!! Form::label('名前') !!}
+                                {!! Form::text('name') !!}
+                            </div>
+                            <div>
+                                {!! Form::label('メモ') !!}
+                                {!! Form::text('memo') !!}
+                            </div>
+                            <div style="display: none">
+                                {!! Form::label('switch') !!}
+                                {!! Form::text('switch', 0) !!}
+                            </div>
+                            <button type="submit" class="btn">記入</button>
+                        {!! Form::close() !!}
+                    <?php break; ?>
+                    @endforeach
+                </div><!--slide-content-->
+            </section><!--slide_parent-->
             
+            <h2>欲しい物リスト</h2>
             @foreach ($accountLists as $accountList)
                 <table class="listTable">
                     <tr class="date">
-                        <th class="date">
+                        <th class="date" colspan="4" style="background-color: lightgrey;">
                             {{ $accountList->created_at }}
                         </th>
                     </tr>
                     @if($accountList->switch == 0)
                     <tr>    
                         <td>
-                            <div class="ListName_flex">
-                                <div>
-                                    {!! Form::open(['route' => ['accountLists.edit', $accountList->id], 'method' => 'post']) !!}
-                                        <div style="display: none;">
-                                            {!! Form::text('switch', 1) !!}
-                                        </div>
-                                        <button type="submit" class="btn-small red"></button>
-                                    {!! Form::close() !!}
-                                </div>
-                                <div class="name">
-                                   {{ $accountList->name }}
-                                </div>
-                            </div>    
+                            <div>
+                                {!! Form::open(['route' => ['accountLists.edit', $accountList->id], 'method' => 'post']) !!}
+                                    <div style="display: none;">
+                                        {!! Form::text('switch', 1) !!}
+                                    </div>
+                                    <button type="submit" class="btn-small red"></button>
+                                {!! Form::close() !!}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="name">
+                               {{ $accountList->name }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="deleteButton">
+                                {!! Form::open(['route' => ['accountLists.destroy', $accountList->id], 'method' => 'delete']) !!}
+                                    <button type="submit" class="btn-flat"><i class="far fa-trash-alt" style="font-size: 1.2em; color: grey"></i></button>
+                                {!! Form::close() !!}
+                            </div>
+                              
                         </td> 
                     </tr>   
                     @else
                     <tr>    
                         <td>
-                            <div class="ListName_flex">
-                                <div>
-                                    {!! Form::open(['route' => ['accountLists.edit', $accountList->id], 'method' => 'post']) !!}
-                                        <div style="display: none;">
-                                            {!! Form::text('switch', 0) !!}
-                                        </div>
-                                        <button type="submit" class="btn-small white"></button>
-                                    {!! Form::close() !!}
-                                </div>    
-                                <div class="lined_name">
-                                    {{ $accountList->name }}
-                                </div>
-                            </div> 
+                            <div>
+                                {!! Form::open(['route' => ['accountLists.edit', $accountList->id], 'method' => 'post']) !!}
+                                    <div style="display: none;">
+                                        {!! Form::text('switch', 0) !!}
+                                    </div>
+                                    <button type="submit" class="btn-small white"></button>
+                                {!! Form::close() !!}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="lined_name">
+                                {{ $accountList->name }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="deleteButton">
+                                {!! Form::open(['route' => ['accountLists.destroy', $accountList->id], 'method' => 'delete']) !!}
+                                    <button type="submit" class="btn-flat"><i class="far fa-trash-alt" style="font-size: 1.2em; color: grey"></i></button>
+                                {!! Form::close() !!}
+                            </div>
+                             
                         </td>
                     </tr>        
                     @endif
                     <tr>
                         @if($accountList->memo == !null)
-                            <td>メモ：{{ $accountList->memo }}</td>
+                            <td colspan="4">メモ：{{ $accountList->memo }}</td>
                         @endif
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div class="deleteButton">
-                                {!! Form::open(['route' => ['accountLists.destroy', $accountList->id], 'method' => 'delete']) !!}
-                                    <button type="submit" class="btn-floating red"><i class="fas fa-trash" style="font-size: 1.2em; color: white"></i></button>
-                                {!! Form::close() !!}
-                            </div>
-                        </td>
                     </tr>
                 </table>
             @endforeach
