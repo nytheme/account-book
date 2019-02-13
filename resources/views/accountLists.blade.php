@@ -1,7 +1,7 @@
 @extends('layouts.head')
 
 @section('content')
-
+<body>
     <div class="container">
         @foreach ($users as $user)
             <!-- slideToggle -->
@@ -147,5 +147,5 @@
     </footer>
     
     <script src="js/main.js"></script>
-    
+</body> 
 @endsection
